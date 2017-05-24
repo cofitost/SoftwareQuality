@@ -7,3 +7,13 @@ public class Demo {
 	}
 
 }
+
+class Book {
+	
+	
+	public int howMuch(int bookWeek, String time, String phoneNumber, boolean isMember){
+		int result = 0;
+		
+		return result;
+	}
+}
