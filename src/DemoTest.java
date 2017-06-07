@@ -1,4 +1,6 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -13,7 +15,7 @@ public class DemoTest {
 	}
 	
 	@Test
-	public void testcheckTime(){
+	public void testCheckTime(){
 		assertTrue(book.checkTime("21:30"));
 		assertTrue(book.checkTime("00:00"));
 		assertFalse(book.checkTime("11:33"));
@@ -21,11 +23,17 @@ public class DemoTest {
 	}
 	
 	@Test
-	public void testcheckWeek(){
-		assertTrue(book.checkWeek("¥|"));
-		assertTrue(book.checkWeek("¤é"));
-		assertFalse(book.checkWeek("¤K"));
-		assertFalse(book.checkWeek("¤K¤C"));
+	public void testCheckWeek(){
+		assertTrue(book.checkWeek("ä¸‰"));
+		assertTrue(book.checkWeek("æ—¥"));
+		assertFalse(book.checkWeek("ä¸ƒ"));
+		assertFalse(book.checkWeek("å…«ä¸ƒ"));
+	}
+	
+	@Test
+	public void testHowMuch(){
+		assertEquals(135,book.howMuch("ä¸€", "08:00", "0918739200", true, false));
+		assertEquals(90,book.howMuch("å…­", "15:30", "0918937200", true, true));
 	}
 
 }
