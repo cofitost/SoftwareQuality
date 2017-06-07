@@ -1,94 +1,82 @@
 import java.awt.Window.Type;
 import static org.junit.Assert.*;
 
-public class Demo {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Book b = new Book();
-		String a = "11:30";
-		System.out.println(a.substring(0,2));
-		System.out.println(Double.valueOf(a.substring(0,2)));
-		System.out.println(b.howMuch("一", "08:00", "0918739200", true, false));
-	}
-
-}
-
 class Book {
-	
+
 	private int Week = 0;
 	private double Time = 0;
-	
-	
-	public int howMuch(String bookWeek, String time, String phoneNumber, boolean isMember, boolean isHalfPrice){
+
+	public int howMuch(String bookWeek, String time, String phoneNumber, boolean isMember, boolean isHalfPrice)
+			throws Exception {
 		int result = 0;
-		
-		if(checkWeek(bookWeek) && checkTime(time) && CheckPhoneType(phoneNumber)){
-//			assertTrue(Time>=0 && Time<=23.5);
-//			assertTrue(Week>=1 && Week<=7);
-			if(Week == 1){
-				if(Time == 0){
-					result = 210;
-				}else if(Time >= 12 && Time <= 20.5){
-					result = 180;
-				}else{
-					result = 150;
-				}
-			}else if(Week >= 2 && Week <= 4){
-				if(Time >= 12 && Time <=20.5){
-					result = 180;
-				}else{
-					result = 150;
-				}
-			}else if(Week == 5){
-				if(Time == 0){
-					result = 150;
-				}else if(Time >= 4 && Time <= 11.5){
-					result = 180;
-				}else{
-					result = 210;
-				}
-			}else{
+
+		if (!checkWeek(bookWeek) || !checkTime(time) || !CheckPhoneType(phoneNumber)) {
+			throw new Exception("資料格式錯誤");
+		}
+		if (Week == 1) {
+			if (Time >= 0 && Time <= 11.5) {
+				result = 210;
+			} else if (Time >= 12 && Time <= 20.5) {
+				result = 180;
+			} else {
+				result = 150;
+			}
+		} else if (Week >= 2 && Week <= 4) {
+			if (Time >= 12 && Time <= 20.5) {
+				result = 180;
+			} else {
+				result = 150;
+			}
+		} else if (Week == 5) {
+			if (Time <= 11.5) {
+				result = 150;
+			} else {
 				result = 210;
 			}
+		} else {
+			result = 210;
 		}
-		
-		if(isHalfPrice){
+
+		if (isHalfPrice) {
 			result = 100;
 		}
-		
-		if(isMember){
+
+		if (isMember) {
 			result *= 0.9;
 		}
 		return result;
 	}
 
 	protected boolean CheckPhoneType(String phoneNumber) {
-		if(phoneNumber.length() == 10 && phoneNumber.substring(0, 2).equals("09")){
+		if (phoneNumber.length() == 10 && phoneNumber.substring(0, 2).equals("09")) {
 			return true;
 		}
 		return false;
 	}
 
 	protected boolean checkTime(String time) {
-		
-		Time = Double.valueOf(time.substring(0, 2));
-		if(time.substring(3).equals("30")){
-			Time += 0.5;
-		}else if(time.substring(3).equals("00")){
-			
-		}else{
+
+		if (time.length() != 5) {
 			return false;
 		}
-		
-		if(Time >= 0 && Time <= 23.5){
+
+		Time = Double.valueOf(time.substring(0, 2));
+		if (time.substring(3).equals("30")) {
+			Time += 0.5;
+		} else if (time.substring(3).equals("00")) {
+
+		} else {
+			return false;
+		}
+
+		if (Time == 0 || (Time >= 4 && Time <= 23.5)) {
 			return true;
 		}
 		return false;
 	}
 
 	protected boolean checkWeek(String bookWeek) {
-		
+
 		switch (bookWeek) {
 		case "一":
 			Week = 1;
